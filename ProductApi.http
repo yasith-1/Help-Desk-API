@@ -1,0 +1,71 @@
+### මේ file එක VS Code (REST Client extension) හෝ Rider/Visual Studio වල run කරන්න පුළුවන්.
+### පිළිවෙළට: login → token copy → @token එකට paste → protected endpoints.
+
+@host = http://localhost:5000
+@token = PASTE_TOKEN_HERE
+
+### 1. Login (admin) — token එකක් ගන්නවා
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### 2. Register — අලුත් user
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "newuser",
+  "password": "pass123"
+}
+
+### 3. Get all products (login ඕන — token දාන්න)
+GET {{host}}/api/products
+Authorization: Bearer {{token}}
+
+### 4. Get one product
+GET {{host}}/api/products/1
+Authorization: Bearer {{token}}
+
+### 5. Create product (validation test — Price=0 දැම්මොත් 400)
+POST {{host}}/api/products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Keyboard",
+  "category": "Electronics",
+  "price": 45.50,
+  "stock": 30
+}
+
+### 6. Update product
+PUT {{host}}/api/products/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Gaming Laptop",
+  "category": "Electronics",
+  "price": 2000,
+  "stock": 8
+}
+
+### 7. Delete product (Admin role විතරක් — User token එකෙන් → 403)
+DELETE {{host}}/api/products/2
+Authorization: Bearer {{token}}
+
+### 8. Validation fail demo (invalid data → 400 Bad Request)
+POST {{host}}/api/products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "",
+  "category": "",
+  "price": -5,
+  "stock": -10
+}
