@@ -85,6 +85,7 @@ public class AuthService : IAuthService
             FullName = user.FullName,
             Username = user.Username,
             Role = user.Role,
+            AvatarUrl = user.AvatarUrl,
             Permissions = _perms.GetPermissions(user.Role).ToList(),
             ExpiresAt = expiresAt
         };

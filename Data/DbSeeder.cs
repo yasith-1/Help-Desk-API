@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ProductApi.Models;
 
 namespace ProductApi.Data;
@@ -8,7 +9,8 @@ public static class DbSeeder
 {
     public static void Seed(AppDbContext db)
     {
-        SeedRoles(db);   // roles — වෙනම guard (පරණ DB එකටත් roles එකතු වෙන්න)
+        EnsureSchema(db);   // පරණ DB එකට අලුත් columns එකතු කරනවා (EnsureCreated alter කරන්නේ නෑ)
+        SeedRoles(db);      // roles — වෙනම guard (පරණ DB එකටත් roles එකතු වෙන්න)
 
         if (db.Users.Any()) return;   // දැනටමත් data තියෙනවා නම් ආයෙත් දාන්නේ නෑ
 
@@ -101,6 +103,21 @@ public static class DbSeeder
         );
 
         db.SaveChanges();
+    }
+
+    // EnsureCreated() පවතින table එකට අලුත් column එකක් add කරන්නේ නෑ. ඒ නිසා මෙතනදී
+    // AvatarUrl column එක නැත්නම් විතරක් idempotent විදිහට add කරනවා (migrations නැති නිසා).
+    private static void EnsureSchema(AppDbContext db)
+    {
+        try
+        {
+            db.Database.ExecuteSqlRaw(
+                "ALTER TABLE Users ADD COLUMN AvatarUrl varchar(255) NULL");
+        }
+        catch
+        {
+            // column එක දැනටමත් තියෙනවා නම් (duplicate column) → නොසලකා හරිනවා
+        }
     }
 
     // System roles 3ක් + ඒවායේ default permissions (DB එකේ roles නැත්නම් විතරක්).

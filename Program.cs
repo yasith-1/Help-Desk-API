@@ -28,6 +28,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 // ── 2. JWT Authentication (Spring Security වගේ) ───────────────────────────────────
@@ -93,6 +94,8 @@ var app = builder.Build();
 // ── 4. Middleware pipeline (පිළිවෙළ වැදගත්!) ──────────────────────────────────────
 
 app.UseMiddleware<ErrorHandlingMiddleware>();   // errors එක තැනකින් → ලස්සන JSON
+
+app.UseStaticFiles();   // wwwroot/ serve කරනවා — profile avatar images (/uploads/avatars/...)
 
 if (app.Environment.IsDevelopment())
 {

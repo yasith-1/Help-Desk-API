@@ -35,6 +35,7 @@ public class AuthResponse
     public string FullName { get; set; } = "";
     public string Username { get; set; } = "";
     public string Role { get; set; } = "";
+    public string? AvatarUrl { get; set; }                   // profile image (null = initials)
     public List<string> Permissions { get; set; } = new();   // role එකේ permissions
     public DateTime ExpiresAt { get; set; }
 }

@@ -25,6 +25,7 @@ public class AppDbContext : DbContext
 
         // Indexed string columns — MySQL index වලට max length ඕන (නැත්නම් longtext → index error).
         b.Entity<User>().Property(u => u.Username).HasMaxLength(50);
+        b.Entity<User>().Property(u => u.AvatarUrl).HasMaxLength(255);
         b.Entity<Ticket>().Property(t => t.TicketNumber).HasMaxLength(20);
         b.Entity<Role>().Property(r => r.Name).HasMaxLength(60);
 

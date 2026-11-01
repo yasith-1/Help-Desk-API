@@ -12,6 +12,10 @@ public class User
     public bool IsActive { get; set; } = true;         // deactivate කරොත් login බෑ
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+    // Profile image path — උදා: "/uploads/avatars/xxx.jpg". null නම් initials avatar එක පෙන්නනවා.
+    // (දැනට local disk; අනාගතයේ S3 URL එකක් මෙතන save කරන්න පුළුවන්.)
+    public string? AvatarUrl { get; set; }
+
     // Navigation properties (EF Core relationships)
     public List<Ticket> CreatedTickets { get; set; } = new();   // මේ user raise කරපු tickets
     public List<Ticket> AssignedTickets { get; set; } = new();  // මේ agent ට assign කරපු tickets

@@ -79,6 +79,7 @@ public class UserService : IUserService
         Username = u.Username,
         Role = u.Role,
         IsActive = u.IsActive,
+        AvatarUrl = u.AvatarUrl,
         CreatedAt = u.CreatedAt
     };
 }
