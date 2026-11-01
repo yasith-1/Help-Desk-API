@@ -5,7 +5,7 @@ namespace ProductApi.DTOs;
 
 public class CategoryRequest
 {
-    [Required(ErrorMessage = "නම අනිවාර්යයි")]
+    [Required(ErrorMessage = "Name is required")]
     [StringLength(60, MinimumLength = 2)]
     public string Name { get; set; } = "";
 
@@ -14,7 +14,7 @@ public class CategoryRequest
 
     [Required] public TicketPriority DefaultPriority { get; set; } = TicketPriority.Medium;
 
-    [Range(1, 2160, ErrorMessage = "SLA පැය 1-2160 අතර")]
+    [Range(1, 2160, ErrorMessage = "SLA hours must be between 1 and 2160")]
     public int SlaHours { get; set; } = 24;
 }
 

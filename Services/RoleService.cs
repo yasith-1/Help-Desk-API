@@ -27,7 +27,7 @@ public class RoleService : IRoleService
     public RoleResponse Create(CreateRoleRequest req)
     {
         if (_db.Roles.Any(r => r.Name == req.Name && !r.IsDeleted))
-            throw new ArgumentException("මේ නමින් role එකක් දැනටමත් තියෙනවා");
+            throw new ArgumentException("A role with this name already exists");
 
         var keys = CleanPermissions(req.Permissions);
         var role = new Role
@@ -46,9 +46,9 @@ public class RoleService : IRoleService
     {
         var role = Load(id);
         if (role.IsSystem && role.Name != req.Name)
-            throw new ArgumentException("System role එකක නම වෙනස් කරන්න බෑ");
+            throw new ArgumentException("A system role's name cannot be changed");
         if (_db.Roles.Any(r => r.Name == req.Name && r.Id != id && !r.IsDeleted))
-            throw new ArgumentException("මේ නමින් role එකක් දැනටමත් තියෙනවා");
+            throw new ArgumentException("A role with this name already exists");
 
         var oldName = role.Name;
         role.Name = req.Name.Trim();
@@ -79,9 +79,9 @@ public class RoleService : IRoleService
     public void Delete(int id)
     {
         var role = Load(id);
-        if (role.IsSystem) throw new ArgumentException("System role එකක් මකන්න බෑ");
+        if (role.IsSystem) throw new ArgumentException("A system role cannot be deleted");
         if (_db.Users.Any(u => u.Role == role.Name))
-            throw new ArgumentException("Users ලා සිටින role එකක් මකන්න බෑ (මුලින් ඒ users ලා වෙන role එකකට මාරු කරන්න)");
+            throw new ArgumentException("A role with assigned users cannot be deleted (move those users to another role first)");
 
         role.IsDeleted = true;
         role.DeletedAt = DateTime.UtcNow;
@@ -91,7 +91,7 @@ public class RoleService : IRoleService
     // ── helpers ──
     private Role Load(int id) =>
         _db.Roles.Include(r => r.Permissions).FirstOrDefault(r => r.Id == id && !r.IsDeleted)
-        ?? throw new KeyNotFoundException($"Role {id} හමු නොවීය");
+        ?? throw new KeyNotFoundException($"Role {id} not found");
 
     private static List<string> CleanPermissions(IEnumerable<string> perms) =>
         perms.Where(Permissions.IsValid).Distinct().ToList();

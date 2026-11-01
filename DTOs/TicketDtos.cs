@@ -7,15 +7,15 @@ namespace ProductApi.DTOs;
 
 public class CreateTicketRequest
 {
-    [Required(ErrorMessage = "title අනිවාර්යයි")]
-    [StringLength(150, MinimumLength = 3, ErrorMessage = "title අකුරු 3-150 අතර")]
+    [Required(ErrorMessage = "Title is required")]
+    [StringLength(150, MinimumLength = 3, ErrorMessage = "Title must be between 3 and 150 characters")]
     public string Title { get; set; } = "";
 
-    [Required(ErrorMessage = "description අනිවාර්යයි")]
+    [Required(ErrorMessage = "Description is required")]
     [StringLength(4000, MinimumLength = 5)]
     public string Description { get; set; } = "";
 
-    [Required(ErrorMessage = "category එක තෝරන්න")]
+    [Required(ErrorMessage = "Select a category")]
     public int CategoryId { get; set; }
 
     // Customer ට "suggest" කරන්න පුළුවන්; දාන්නේ නැත්නම් category එකේ default එක ගනී.

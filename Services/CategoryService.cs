@@ -28,7 +28,7 @@ public class CategoryService : ICategoryService
     public CategoryResponse Create(CategoryRequest req)
     {
         if (_db.Categories.Any(c => c.Name == req.Name && !c.IsDeleted))
-            throw new ArgumentException("මේ නමින් category එකක් දැනටමත් තියෙනවා");
+            throw new ArgumentException("A category with this name already exists");
 
         var c = new Category
         {
@@ -45,7 +45,7 @@ public class CategoryService : ICategoryService
     public CategoryResponse Update(int id, CategoryRequest req)
     {
         var c = _db.Categories.Find(id)
-            ?? throw new KeyNotFoundException($"Category {id} හමු නොවීය");
+            ?? throw new KeyNotFoundException($"Category {id} not found");
 
         c.Name = req.Name;
         c.Description = req.Description;
@@ -60,7 +60,7 @@ public class CategoryService : ICategoryService
     public void Delete(int id)
     {
         var c = _db.Categories.Find(id)
-            ?? throw new KeyNotFoundException($"Category {id} හමු නොවීය");
+            ?? throw new KeyNotFoundException($"Category {id} not found");
 
         c.IsDeleted = true;
         c.DeletedAt = DateTime.UtcNow;

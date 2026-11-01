@@ -74,7 +74,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "JWT token එක දාන්න (Bearer prefix එක ඕන නෑ)."
+        Description = "Enter the JWT token (no 'Bearer' prefix needed)."
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {

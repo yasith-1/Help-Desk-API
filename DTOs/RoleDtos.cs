@@ -14,7 +14,7 @@ public class RoleResponse
 
 public class CreateRoleRequest
 {
-    [Required(ErrorMessage = "role නම අනිවාර්යයි")]
+    [Required(ErrorMessage = "Role name is required")]
     [StringLength(40, MinimumLength = 2)]
     public string Name { get; set; } = "";
 

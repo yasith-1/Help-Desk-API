@@ -25,6 +25,6 @@ public class PermissionService : IPermissionService
     public void Require(string roleName, string permission)
     {
         if (!Has(roleName, permission))
-            throw new UnauthorizedAccessException("මේ ක්‍රියාව කරන්න ඔයාට අවසර නෑ");
+            throw new UnauthorizedAccessException("You do not have permission to perform this action");
     }
 }

@@ -24,7 +24,7 @@ public class AuthController : ApiControllerBase
     {
         var result = _auth.Register(request);
         if (result == null)
-            return Conflict(new { message = "username හෝ email එක දැනටමත් තියෙනවා" });   // 409
+            return Conflict(new { message = "Username or email already exists" });   // 409
         return Ok(result);                                                               // 200 + token
     }
 
@@ -34,7 +34,7 @@ public class AuthController : ApiControllerBase
     {
         var result = _auth.Login(request);
         if (result == null)
-            return Unauthorized(new { message = "username හෝ password වැරදියි" });        // 401
+            return Unauthorized(new { message = "Invalid username or password" });        // 401
         return Ok(result);                                                               // 200 + token
     }
 

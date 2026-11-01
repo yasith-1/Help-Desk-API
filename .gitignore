@@ -2,3 +2,8 @@ bin/
 obj/
 *.user
 .vs/
+
+# JetBrains Rider / IntelliJ IDE files (machine-specific, don't push)
+.idea/
+*.iml
+*.sln.iml

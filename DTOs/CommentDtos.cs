@@ -4,7 +4,7 @@ namespace ProductApi.DTOs;
 
 public class CreateCommentRequest
 {
-    [Required(ErrorMessage = "message එක හිස් වෙන්න බෑ")]
+    [Required(ErrorMessage = "Message cannot be empty")]
     [StringLength(4000, MinimumLength = 1)]
     public string Body { get; set; } = "";
 

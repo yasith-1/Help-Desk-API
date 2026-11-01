@@ -32,9 +32,9 @@ public class UserService : IUserService
     public UserResponse Create(CreateUserRequest req)
     {
         if (!RoleExists(req.Role))
-            throw new ArgumentException("වලංගු role එකක් තෝරන්න");
+            throw new ArgumentException("Select a valid role");
         if (_db.Users.Any(u => u.Username == req.Username || u.Email == req.Email))
-            throw new ArgumentException("username හෝ email එක දැනටමත් තියෙනවා");
+            throw new ArgumentException("Username or email already exists");
 
         var user = new User
         {
@@ -53,10 +53,10 @@ public class UserService : IUserService
     public UserResponse ChangeRole(int id, string role)
     {
         if (!RoleExists(role))
-            throw new ArgumentException("වලංගු role එකක් තෝරන්න");
+            throw new ArgumentException("Select a valid role");
 
         var user = _db.Users.Find(id)
-            ?? throw new KeyNotFoundException($"User {id} හමු නොවීය");
+            ?? throw new KeyNotFoundException($"User {id} not found");
         user.Role = role;
         _db.SaveChanges();
         return ToResponse(user);
@@ -65,7 +65,7 @@ public class UserService : IUserService
     public UserResponse SetActive(int id, bool isActive)
     {
         var user = _db.Users.Find(id)
-            ?? throw new KeyNotFoundException($"User {id} හමු නොවීය");
+            ?? throw new KeyNotFoundException($"User {id} not found");
         user.IsActive = isActive;
         _db.SaveChanges();
         return ToResponse(user);

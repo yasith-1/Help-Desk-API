@@ -31,7 +31,7 @@ public class ErrorHandlingMiddleware
                 UnauthorizedAccessException => (HttpStatusCode.Forbidden, ex.Message),      // 403
                 ArgumentException          => (HttpStatusCode.BadRequest, ex.Message),      // 400
                 InvalidOperationException  => (HttpStatusCode.BadRequest, ex.Message),      // 400
-                _                          => (HttpStatusCode.InternalServerError, "අභ්‍යන්තර දෝෂයක්")
+                _                          => (HttpStatusCode.InternalServerError, "Internal server error")
             };
 
             if (status == HttpStatusCode.InternalServerError)

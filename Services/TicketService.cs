@@ -86,7 +86,7 @@ public class TicketService : ITicketService
             .Include(x => x.Comments).ThenInclude(c => c.Author)
             .Include(x => x.History).ThenInclude(h => h.Actor)
             .FirstOrDefault(x => x.Id == id)
-            ?? throw new KeyNotFoundException($"Ticket {id} හමු නොවීය");
+            ?? throw new KeyNotFoundException($"Ticket {id} not found");
 
         EnsureCanView(t, userId, role);
         return ToDetail(t, CanSeeInternal(role));
@@ -96,7 +96,7 @@ public class TicketService : ITicketService
     public TicketDetailResponse Create(CreateTicketRequest req, int userId, string role)
     {
         var category = _db.Categories.Find(req.CategoryId)
-            ?? throw new ArgumentException("වලංගු category එකක් තෝරන්න");
+            ?? throw new ArgumentException("Select a valid category");
 
         var now = DateTime.UtcNow;
         var priority = req.Priority ?? category.DefaultPriority;
@@ -122,13 +122,13 @@ public class TicketService : ITicketService
     public TicketDetailResponse Update(int id, UpdateTicketRequest req, int userId, string role)
     {
         var t = Query().FirstOrDefault(x => x.Id == id)
-            ?? throw new KeyNotFoundException($"Ticket {id} හමු නොවීය");
+            ?? throw new KeyNotFoundException($"Ticket {id} not found");
 
         if (!_perms.Has(role, Permissions.TicketsEditAny) && t.CreatedById != userId)
-            throw new UnauthorizedAccessException("මේ ticket එක වෙනස් කරන්න ඔයාට අවසර නෑ");
+            throw new UnauthorizedAccessException("You do not have permission to edit this ticket");
 
         if (_db.Categories.Find(req.CategoryId) == null)
-            throw new ArgumentException("වලංගු category එකක් තෝරන්න");
+            throw new ArgumentException("Select a valid category");
 
         t.Title = req.Title; t.Description = req.Description;
         t.CategoryId = req.CategoryId; t.Priority = req.Priority;
@@ -143,15 +143,15 @@ public class TicketService : ITicketService
     public TicketDetailResponse ChangeStatus(int id, TicketStatus status, int userId, string role)
     {
         var t = Query().FirstOrDefault(x => x.Id == id)
-            ?? throw new KeyNotFoundException($"Ticket {id} හමු නොවීය");
+            ?? throw new KeyNotFoundException($"Ticket {id} not found");
 
         if (!_perms.Has(role, Permissions.TicketsChangeStatus))
         {
             // perm නෑ: තමන්ගේ resolved/closed ticket එකක් reopen කරන්න විතරක් පුළුවන්
             if (t.CreatedById != userId)
-                throw new UnauthorizedAccessException("මේ ticket එක වෙනස් කරන්න ඔයාට අවසර නෑ");
+                throw new UnauthorizedAccessException("You do not have permission to edit this ticket");
             if (!(status == TicketStatus.Reopened && t.Status is TicketStatus.Resolved or TicketStatus.Closed))
-                throw new UnauthorizedAccessException("ඔයාට reopen කරන්න විතරයි පුළුවන්");
+                throw new UnauthorizedAccessException("You can only reopen this ticket");
         }
 
         if (t.Status == status) return GetById(id, userId, role);
@@ -177,7 +177,7 @@ public class TicketService : ITicketService
         _perms.Require(role, Permissions.TicketsAssign);
 
         var t = Query().FirstOrDefault(x => x.Id == id)
-            ?? throw new KeyNotFoundException($"Ticket {id} හමු නොවීය");
+            ?? throw new KeyNotFoundException($"Ticket {id} not found");
 
         string actionText;
         if (assignedToId == null)
@@ -187,9 +187,9 @@ public class TicketService : ITicketService
         else
         {
             var agent = _db.Users.Find(assignedToId.Value)
-                ?? throw new ArgumentException("User හමු නොවීය");
+                ?? throw new ArgumentException("User not found");
             if (!_perms.Has(agent.Role, Permissions.TicketsViewAll))
-                throw new ArgumentException("Assign කරන්න පුළුවන් tickets handle කරන අයට විතරයි");
+                throw new ArgumentException("Tickets can only be assigned to users who handle tickets");
             t.AssignedToId = agent.Id;
             actionText = $"Assigned to {agent.FullName}";
         }
@@ -204,7 +204,7 @@ public class TicketService : ITicketService
     public CommentResponse AddComment(int id, CreateCommentRequest req, int userId, string role)
     {
         var t = Query().FirstOrDefault(x => x.Id == id)
-            ?? throw new KeyNotFoundException($"Ticket {id} හමු නොවීය");
+            ?? throw new KeyNotFoundException($"Ticket {id} not found");
 
         EnsureCanView(t, userId, role);
 
@@ -229,7 +229,7 @@ public class TicketService : ITicketService
         var t = Query()
             .Include(x => x.History).ThenInclude(h => h.Actor)
             .FirstOrDefault(x => x.Id == id)
-            ?? throw new KeyNotFoundException($"Ticket {id} හමු නොවීය");
+            ?? throw new KeyNotFoundException($"Ticket {id} not found");
 
         EnsureCanView(t, userId, role);
         return t.History.OrderBy(h => h.CreatedAt)
@@ -246,7 +246,7 @@ public class TicketService : ITicketService
     private void EnsureCanView(Ticket t, int userId, string role)
     {
         if (!_perms.Has(role, Permissions.TicketsViewAll) && t.CreatedById != userId)
-            throw new UnauthorizedAccessException("මේ ticket එක බලන්න ඔයාට අවසර නෑ");
+            throw new UnauthorizedAccessException("You do not have permission to view this ticket");
     }
 
     private static bool Overdue(Ticket t) =>
