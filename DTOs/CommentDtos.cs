@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ProductApi.DTOs;
+namespace HelpdeskApi.DTOs;
 
 public class CreateCommentRequest
 {

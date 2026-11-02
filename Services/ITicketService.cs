@@ -1,7 +1,7 @@
-using ProductApi.DTOs;
-using ProductApi.Models;
+using HelpdeskApi.DTOs;
+using HelpdeskApi.Models;
 
-namespace ProductApi.Services;
+namespace HelpdeskApi.Services;
 
 // Ticket business logic. හැම method එකකටම current user (id + role) දෙනවා — scoping/permission වලට.
 public interface ITicketService

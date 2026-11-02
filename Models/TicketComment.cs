@@ -1,4 +1,4 @@
-namespace ProductApi.Models;
+namespace HelpdeskApi.Models;
 
 // Ticket එකක conversation එකේ එක message එකක්.
 // IsInternal = true නම් → agents/admin ට විතරක් පේන "internal note" එකක් (customer ට පේන්නේ නෑ).

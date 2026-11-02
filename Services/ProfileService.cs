@@ -1,8 +1,8 @@
-using ProductApi.Data;
-using ProductApi.DTOs;
-using ProductApi.Models;
+using HelpdeskApi.Data;
+using HelpdeskApi.DTOs;
+using HelpdeskApi.Models;
 
-namespace ProductApi.Services;
+namespace HelpdeskApi.Services;
 
 public class ProfileService : IProfileService
 {

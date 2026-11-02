@@ -1,4 +1,4 @@
-namespace ProductApi.Models;
+namespace HelpdeskApi.Models;
 
 // Ticket වර්ගීකරණය (උදා: "IT / Hardware", "Billing", "General"). Admin ට manage කරන්න පුළුවන්.
 public class Category

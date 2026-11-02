@@ -2,11 +2,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using ProductApi.Data;
-using ProductApi.DTOs;
-using ProductApi.Models;
+using HelpdeskApi.Data;
+using HelpdeskApi.DTOs;
+using HelpdeskApi.Models;
 
-namespace ProductApi.Services;
+namespace HelpdeskApi.Services;
 
 // Authentication service — register, login, JWT token generation (Spring Security වගේ)
 public class AuthService : IAuthService

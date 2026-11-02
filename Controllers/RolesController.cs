@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProductApi.DTOs;
-using ProductApi.Models;
-using ProductApi.Services;
+using HelpdeskApi.DTOs;
+using HelpdeskApi.Models;
+using HelpdeskApi.Services;
 
-namespace ProductApi.Controllers;
+namespace HelpdeskApi.Controllers;
 
 [ApiController]
 [Route("api/roles")]

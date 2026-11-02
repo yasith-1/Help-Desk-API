@@ -30,7 +30,7 @@ Database එක **SQLite** (`helpdesk.db` file) — install කරන්න ද�
 
 ### පියවර
 ```bash
-cd ProductApi
+cd helpdesk-api
 dotnet restore
 dotnet run
 ```
@@ -87,7 +87,7 @@ Browser එකේ: **http://localhost:5000/swagger** 🎉
 ## 📂 ව්‍යුහය (layered — Spring Boot වගේ)
 
 ```
-ProductApi/
+helpdesk-api/
 ├── Program.cs                 # setup: DI + SQLite + JWT + CORS + middleware
 ├── appsettings.json           # connection string + Jwt + SLA config
 ├── Models/                    # entities (DB tables)
@@ -159,7 +159,7 @@ flowchart TD
 |-------|---------|-------------------|
 | **Program.cs** | Entry point — **මුලින්ම run වෙන file එක** (`main` වගේ). DI register, JWT/CORS/Swagger setup, middleware pipeline, DB seed, `app.Run()` | `Application.java` + `@Configuration` + `SecurityConfig` + `application.properties` |
 | **appsettings.json** | Connection string, JWT key/expiry, SLA පැය, logging — config values | `application.properties` / `.yml` |
-| **ProductApi.csproj** | NuGet packages + target framework (`net8.0`) | `pom.xml` / `build.gradle` |
+| **HelpdeskApi.csproj** | NuGet packages + target framework (`net8.0`) | `pom.xml` / `build.gradle` |
 | **Properties/launchSettings.json** | Local run profiles — ports, environment | IDE Run Config / `application-dev.properties` |
 
 ### 🎯 Controllers — HTTP endpoints

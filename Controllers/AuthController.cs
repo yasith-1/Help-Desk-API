@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProductApi.DTOs;
-using ProductApi.Services;
+using HelpdeskApi.DTOs;
+using HelpdeskApi.Services;
 
-namespace ProductApi.Controllers;
+namespace HelpdeskApi.Controllers;
 
 [ApiController]                       // Spring: @RestController (+ auto validation)
 [Route("api/auth")]                  // Spring: @RequestMapping("/api/auth")

@@ -1,4 +1,4 @@
-namespace ProductApi.Models;
+namespace HelpdeskApi.Models;
 
 // Entity — users table. Password එක plain නෙවෙයි — HASH කරලා save කරනවා.
 public class User

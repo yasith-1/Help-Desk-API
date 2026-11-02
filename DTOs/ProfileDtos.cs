@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ProductApi.DTOs;
+namespace HelpdeskApi.DTOs;
 
 // Logged-in user තමන්ගේ profile එක බලන/වෙනස් කරන DTOs.
 // System fields (Id, Username, Role, IsActive) edit කරන්න දෙන්නේ නෑ — read-only විදිහට පෙන්නනවා.

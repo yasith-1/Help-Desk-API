@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ProductApi.DTOs;
+namespace HelpdeskApi.DTOs;
 
 // Admin විසින් account එකක් හදනවා (ඕනම role එකක්).
 public class CreateUserRequest

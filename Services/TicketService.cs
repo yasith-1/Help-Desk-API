@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using ProductApi.Data;
-using ProductApi.DTOs;
-using ProductApi.Models;
+using HelpdeskApi.Data;
+using HelpdeskApi.DTOs;
+using HelpdeskApi.Models;
 
-namespace ProductApi.Services;
+namespace HelpdeskApi.Services;
 
 // Ticket business logic layer. Permission/scoping මෙතන බලනවා (PermissionService හරහා).
 public class TicketService : ITicketService

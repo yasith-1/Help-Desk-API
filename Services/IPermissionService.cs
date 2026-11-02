@@ -1,4 +1,4 @@
-namespace ProductApi.Services;
+namespace HelpdeskApi.Services;
 
 // Role name එකකින් ඒ role එකේ permissions resolve කරනවා (DB එකෙන්).
 public interface IPermissionService

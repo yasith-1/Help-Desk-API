@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text.Json;
 
-namespace ProductApi.Middleware;
+namespace HelpdeskApi.Middleware;
 
 // Global error handler (Spring: @ControllerAdvice වගේ — errors එක තැනකින්, ලස්සන JSON).
 // Service වලින් එන exception වර්ග අදාළ HTTP status code එකට map කරනවා.

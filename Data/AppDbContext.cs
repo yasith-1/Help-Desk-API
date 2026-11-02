@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using ProductApi.Models;
+using HelpdeskApi.Models;
 
-namespace ProductApi.Data;
+namespace HelpdeskApi.Data;
 
 // DbContext — Spring වල EntityManager + repositories එකතුවක් වගේ.
 public class AppDbContext : DbContext

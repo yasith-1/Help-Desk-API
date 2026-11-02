@@ -1,6 +1,6 @@
-using ProductApi.DTOs;
+using HelpdeskApi.DTOs;
 
-namespace ProductApi.Services;
+namespace HelpdeskApi.Services;
 
 // Self-service profile — logged-in user තමන්ගේ details manage කරනවා (admin UserService එකෙන් වෙනස්).
 public interface IProfileService

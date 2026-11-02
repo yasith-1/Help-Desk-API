@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using ProductApi.Models;
+using HelpdeskApi.Models;
 
-namespace ProductApi.Data;
+namespace HelpdeskApi.Data;
 
 // App එක මුලින්ම run වෙද්දී sample data දානවා (DB එක හිස් නම් විතරක්).
 // Test/demo වලට ලේසි වෙන්න — users, categories, tickets එක්ක conversation + history.

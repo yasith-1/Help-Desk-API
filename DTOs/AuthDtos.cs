@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ProductApi.DTOs;
+namespace HelpdeskApi.DTOs;
 
 // Public self-registration — සෑම register එකක්ම Customer role එකෙන් පටන් ගන්නවා.
 public class RegisterRequest

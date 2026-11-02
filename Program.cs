@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using ProductApi.Data;
-using ProductApi.Middleware;
-using ProductApi.Services;
+using HelpdeskApi.Data;
+using HelpdeskApi.Middleware;
+using HelpdeskApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

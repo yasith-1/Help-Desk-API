@@ -1,4 +1,4 @@
-namespace ProductApi.Models;
+namespace HelpdeskApi.Models;
 
 // Role එකකට අයිති එක permission key එකක් (Role 1 — * RolePermission).
 public class RolePermission

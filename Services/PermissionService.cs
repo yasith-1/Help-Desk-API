@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using ProductApi.Data;
+using HelpdeskApi.Data;
 
-namespace ProductApi.Services;
+namespace HelpdeskApi.Services;
 
 public class PermissionService : IPermissionService
 {

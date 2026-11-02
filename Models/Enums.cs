@@ -1,4 +1,4 @@
-namespace ProductApi.Models;
+namespace HelpdeskApi.Models;
 
 // Ticket එකක life-cycle එකේ තත්ත්ව (status). (Spring/Java වල enum එකක්ම තමයි.)
 public enum TicketStatus

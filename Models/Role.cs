@@ -1,4 +1,4 @@
-namespace ProductApi.Models;
+namespace HelpdeskApi.Models;
 
 // Role entity — admin ට custom roles හදන්න පුළුවන්. User.Role (string) = Role.Name.
 public class Role

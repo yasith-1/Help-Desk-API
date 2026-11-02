@@ -1,4 +1,4 @@
-namespace ProductApi.DTOs;
+namespace HelpdeskApi.DTOs;
 
 // Dashboard එකේ stat cards + charts වලට අවශ්‍ය numbers.
 public class DashboardStats

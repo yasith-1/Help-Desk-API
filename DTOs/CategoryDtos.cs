@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using ProductApi.Models;
+using HelpdeskApi.Models;
 
-namespace ProductApi.DTOs;
+namespace HelpdeskApi.DTOs;
 
 public class CategoryRequest
 {

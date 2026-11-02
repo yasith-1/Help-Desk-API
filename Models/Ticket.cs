@@ -1,4 +1,4 @@
-namespace ProductApi.Models;
+namespace HelpdeskApi.Models;
 
 // මූලික entity — raise කරන ප්‍රශ්නය (ticket). System එකේ හදවත.
 public class Ticket

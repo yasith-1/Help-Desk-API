@@ -1,6 +1,6 @@
-using ProductApi.DTOs;
+using HelpdeskApi.DTOs;
 
-namespace ProductApi.Services;
+namespace HelpdeskApi.Services;
 
 public interface IUserService
 {

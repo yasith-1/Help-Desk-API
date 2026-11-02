@@ -1,8 +1,8 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using ProductApi.Services;
+using HelpdeskApi.Services;
 
-namespace ProductApi.Controllers;
+namespace HelpdeskApi.Controllers;
 
 // Base controller — JWT token එකේ claims වලින් current user id + role කියවනවා.
 public abstract class ApiControllerBase : ControllerBase

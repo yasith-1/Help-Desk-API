@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProductApi.Services;
+using HelpdeskApi.Services;
 
-namespace ProductApi.Controllers;
+namespace HelpdeskApi.Controllers;
 
 [ApiController]
 [Route("api/dashboard")]

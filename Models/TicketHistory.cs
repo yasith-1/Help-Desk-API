@@ -1,4 +1,4 @@
-namespace ProductApi.Models;
+namespace HelpdeskApi.Models;
 
 // Audit trail — ticket එකකට වුණු හැම වෙනසක්ම (status මාරුව, assign, priority...) log කරනවා.
 // Timeline එකක් විදිහට ticket detail page එකේ පෙන්නනවා.

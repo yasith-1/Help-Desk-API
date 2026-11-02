@@ -1,4 +1,4 @@
-namespace ProductApi.Models;
+namespace HelpdeskApi.Models;
 
 // මුළු system එකේ තියෙන permission keys (fixed catalog). Role එකකට මේවායින් කැමති ඒවා assign කරනවා.
 public static class Permissions
