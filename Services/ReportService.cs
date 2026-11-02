@@ -18,8 +18,8 @@ public class ReportService : IReportService
     private static readonly string[] Headers =
         { "Ticket #", "Title", "Status", "Priority", "Category", "Requester", "Assignee", "Created", "Due", "Resolved", "Overdue" };
 
-    // ── filtered ticket query (shared by all 3 formats) ──────────────────────────────
-    private List<Ticket> Query(ReportFilter f)
+    // ── filtered ticket query (shared by all formats + preview) ─────────────────────
+    private IQueryable<Ticket> Filtered(ReportFilter f)
     {
         var q = _db.Tickets
             .Include(t => t.Category)
@@ -35,8 +35,39 @@ public class ReportService : IReportService
             q = q.Where(t => t.Priority == pr);
         if (f.CategoryId.HasValue) q = q.Where(t => t.CategoryId == f.CategoryId.Value);
 
-        return q.OrderByDescending(t => t.CreatedAt).ToList();
+        return q.OrderByDescending(t => t.CreatedAt);
     }
+
+    // කී ticket එකක් match වෙනවද (empty download block කරන්න validate කරන්න)
+    public int Count(ReportFilter filter) => Filtered(filter).Count();
+
+    // table preview — paginated JSON
+    public PagedResult<TicketListItemResponse> Preview(ReportFilter filter, int page, int pageSize)
+    {
+        if (page < 1) page = 1;
+        if (pageSize < 1 || pageSize > 100) pageSize = 10;
+
+        var q = Filtered(filter);
+        var total = q.Count();
+        var items = q.Skip((page - 1) * pageSize).Take(pageSize).ToList().Select(Map).ToList();
+
+        return new PagedResult<TicketListItemResponse> { Items = items, Total = total, Page = page, PageSize = pageSize };
+    }
+
+    private static TicketListItemResponse Map(Ticket t) => new()
+    {
+        Id = t.Id,
+        TicketNumber = t.TicketNumber,
+        Title = t.Title,
+        Status = t.Status.ToString(),
+        Priority = t.Priority.ToString(),
+        CategoryName = t.Category?.Name ?? "",
+        CreatedByName = t.CreatedBy?.FullName ?? "",
+        AssignedToName = t.AssignedTo?.FullName,
+        CreatedAt = t.CreatedAt,
+        DueAt = t.DueAt,
+        IsOverdue = IsOverdue(t)
+    };
 
     private static bool IsOverdue(Ticket t) =>
         t.DueAt < DateTime.UtcNow && t.Status is not (TicketStatus.Resolved or TicketStatus.Closed);
@@ -59,7 +90,7 @@ public class ReportService : IReportService
     // ── A) CSV ────────────────────────────────────────────────────────────────────────
     public byte[] TicketsCsv(ReportFilter filter)
     {
-        var tickets = Query(filter);
+        var tickets = Filtered(filter).ToList();
         var sb = new StringBuilder();
         sb.AppendLine(string.Join(",", Headers.Select(Esc)));
         foreach (var t in tickets)
@@ -121,7 +152,7 @@ public class ReportService : IReportService
     // ── C) PDF (QuestPDF — one-page summary) ────────────────────────────────────────
     public byte[] SummaryPdf(ReportFilter filter)
     {
-        var tickets = Query(filter);
+        var tickets = Filtered(filter).ToList();
         var s = Build(tickets);
         var brand = "#2563eb";
 
@@ -240,7 +271,7 @@ public class ReportService : IReportService
     // ── D) Excel (ClosedXML — Tickets + Summary sheets) ─────────────────────────────
     public byte[] FullXlsx(ReportFilter filter)
     {
-        var tickets = Query(filter);
+        var tickets = Filtered(filter).ToList();
         var s = Build(tickets);
 
         using var wb = new XLWorkbook();
