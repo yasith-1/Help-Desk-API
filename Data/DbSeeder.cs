@@ -9,8 +9,9 @@ public static class DbSeeder
 {
     public static void Seed(AppDbContext db)
     {
-        EnsureSchema(db);   // පරණ DB එකට අලුත් columns එකතු කරනවා (EnsureCreated alter කරන්නේ නෑ)
-        SeedRoles(db);      // roles — වෙනම guard (පරණ DB එකටත් roles එකතු වෙන්න)
+        EnsureSchema(db);          // පරණ DB එකට අලුත් columns එකතු කරනවා (EnsureCreated alter කරන්නේ නෑ)
+        SeedRoles(db);             // roles — වෙනම guard (පරණ DB එකටත් roles එකතු වෙන්න)
+        EnsureAdminPermissions(db);// Admin role එකට අලුත් permissions (උදා: reports.export) idempotent විදිහට
 
         if (db.Users.Any()) return;   // දැනටමත් data තියෙනවා නම් ආයෙත් දාන්නේ නෑ
 
@@ -118,6 +119,22 @@ public static class DbSeeder
         {
             // column එක දැනටමත් තියෙනවා නම් (duplicate column) → නොසලකා හරිනවා
         }
+    }
+
+    // Admin role එකට catalog එකේ හැම permission එකක්ම තියෙනවද බලනවා — නැති ඒවා add කරනවා.
+    // (SeedRoles පරණ DB වල run වෙන්නේ නෑ. ඒ නිසා අලුත් permission එකක් දාද්දී admin ට මේකෙන් ලැබෙනවා.)
+    private static void EnsureAdminPermissions(AppDbContext db)
+    {
+        var admin = db.Roles.Include(r => r.Permissions).FirstOrDefault(r => r.Name == Roles.Admin);
+        if (admin == null) return;
+
+        var existing = admin.Permissions.Select(p => p.Permission).ToHashSet();
+        var missing = Permissions.All.Where(p => !existing.Contains(p)).ToList();
+        if (missing.Count == 0) return;
+
+        foreach (var key in missing)
+            admin.Permissions.Add(new RolePermission { Permission = key });
+        db.SaveChanges();
     }
 
     // System roles 3ක් + ඒවායේ default permissions (DB එකේ roles නැත්නම් විතරක්).

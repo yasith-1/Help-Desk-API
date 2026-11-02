@@ -31,6 +31,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IEmailService, SmtpEmailService>();   // OTP emails (forgot password)
+builder.Services.AddScoped<IReportService, ReportService>();     // admin reports (CSV / PDF / Excel)
+
+// QuestPDF — free Community license (small teams / open-source). PDF generate කරන්න කලින් set කරන්න ඕන.
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
 // Short-lived OTP codes store කරන්න (password reset — 5 min, DB table එකක් ඕන නෑ)
 builder.Services.AddMemoryCache();

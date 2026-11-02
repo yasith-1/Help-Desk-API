@@ -12,6 +12,7 @@ public static class Permissions
     public const string CategoriesManage = "categories.manage";
     public const string UsersManage = "users.manage";
     public const string RolesManage = "roles.manage";
+    public const string ReportsExport = "reports.export";
 
     public record Item(string Key, string Label, string Group);
 
@@ -27,6 +28,7 @@ public static class Permissions
         new(CategoriesManage,      "Manage categories",       "Administration"),
         new(UsersManage,           "Manage users",            "Administration"),
         new(RolesManage,           "Manage roles & permissions","Administration"),
+        new(ReportsExport,         "Export reports",          "Administration"),
     };
 
     public static readonly string[] All = Catalog.Select(c => c.Key).ToArray();
