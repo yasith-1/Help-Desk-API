@@ -30,6 +30,10 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IEmailService, SmtpEmailService>();   // OTP emails (forgot password)
+
+// Short-lived OTP codes store කරන්න (password reset — 5 min, DB table එකක් ඕන නෑ)
+builder.Services.AddMemoryCache();
 
 // ── 2. JWT Authentication (Spring Security වගේ) ───────────────────────────────────
 
